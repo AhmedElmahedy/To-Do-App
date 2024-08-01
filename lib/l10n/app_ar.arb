@@ -1,0 +1,20 @@
+{
+"title":"قائمة المهام",
+"task":"المهمة",
+"description":"الوصف",
+"select":"اختر",
+"list_task" : "المهام",
+"add_new_task":"إضافة مهمة جديدة",
+"enter_task":"ادخل المهمة",
+"enter_description":"ادخل الوصف",
+"add":"إضافة",
+"setting":"الإعدادات",
+"language":"اللغة",
+"english":"الإنجليزية",
+"arabic":"العربية",
+"mode":"النمط",
+"dark":"مٌظلم",
+"light":"مٌضئ",
+"please_enter_your_task":"من فضلك أدخل المهمة",
+"please_enter_your_description":"من فضلك أدخل الوصف"
+}
