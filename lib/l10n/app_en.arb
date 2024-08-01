@@ -1,0 +1,20 @@
+{
+"title" : "TO DO List",
+"task" : "Task",
+"description" : "Description",
+"select" : "Select",
+"list_task" : "Task List",
+"add_new_task" : "Add New Task",
+"enter_task" : "Enter Your Task",
+"enter_description" : "Enter Your Description",
+"add" : "ADD",
+"setting" : "Settings",
+"language" : "Languages",
+"english" : "English",
+"arabic" : "Arabic",
+"mode" : "Mode",
+"dark" : "Dark",
+"light" : "Light",
+"please_enter_your_task":"Please Enter Your Task",
+"please_enter_your_description":"Please Enter Your Description"
+}
