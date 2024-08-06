@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:todoapp/home/settings/settings_tab.dart';
 import 'package:todoapp/home/task_list/add_task_bottom_sheet.dart';
 import 'package:todoapp/home/task_list/task_list_tab.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todoapp/providers/app_config_provider.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home Screen';
 
@@ -16,13 +18,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
       appBar:AppBar(
+        elevation: 0,
         title: Text(AppLocalizations.of(context)!.title,
           // AppLocalizations.of(context)!.title,
-          style: Theme.of(context).textTheme.titleSmall,
+          style:provider.isDarkTheme()?
+              Theme.of(context).textTheme.titleSmall!.copyWith(
+                color:AppColor.backgroundDarkColor
+              ):
+          Theme.of(context).textTheme.titleSmall,
         ),),
       bottomNavigationBar: BottomAppBar(
+      color: provider.isDarkTheme()?
+        AppColor.backDarkColor:
+        AppColor.whiteColor,
          height: MediaQuery.of(context).size.height*0.1096938775510204,
         shape: CircularNotchedRectangle(),
         notchMargin: 15,
@@ -53,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           Container(
-            color: AppColor.primaryColor,
+            color:
+            AppColor.primaryColor,
             width: double.infinity,
             height: MediaQuery.of(context).size.width * 0.1847133757961783,
           ),
@@ -64,8 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
 void addTaskBottomSheet() {
   showModalBottomSheet(
       context: context,

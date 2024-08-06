@@ -4,6 +4,9 @@ import 'package:todoapp/app_color.dart';
 class MyThemeData{
   // light theme and dark theme
   static final themeDataLight = ThemeData(
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColor.whiteColor
+    ),
     primaryColor: AppColor.primaryColor,
     scaffoldBackgroundColor: AppColor.backgroundLightColor,
     appBarTheme: AppBarTheme(
@@ -56,6 +59,9 @@ class MyThemeData{
     )
   );
   static final themeDataDark = ThemeData(
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColor.backDarkColor
+    ),
     primaryColor: AppColor.primaryColor,
     scaffoldBackgroundColor: AppColor.backgroundDarkColor,
     appBarTheme: AppBarTheme(

@@ -16,5 +16,9 @@
 "dark" : "Dark",
 "light" : "Light",
 "please_enter_your_task":"Please Enter Your Task",
-"please_enter_your_description":"Please Enter Your Description"
+"please_enter_your_description":"Please Enter Your Description",
+"edit_task" : "Edit Your Task",
+"edit_description" : "Edit Your Description",
+"edit_task_title" : "Edit Task",
+"save_changes" : "Save Changes"
 }

@@ -16,5 +16,9 @@
 "dark":"مٌظلم",
 "light":"مٌضئ",
 "please_enter_your_task":"من فضلك أدخل المهمة",
-"please_enter_your_description":"من فضلك أدخل الوصف"
+"please_enter_your_description":"من فضلك أدخل الوصف",
+"edit_task" : "تعديل المهمة",
+"edit_description" : "تعديل الوصف",
+"edit_task_title" : "تعديل المهمة",
+"save_changes" : "حفظ التغييرات"
 }
