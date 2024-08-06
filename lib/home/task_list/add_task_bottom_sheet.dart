@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todoapp/home/firebase_utils.dart';
+import 'package:todoapp/home/model/task.dart';
+import 'package:todoapp/providers/app_config_provider.dart';
 class AddTaskBottomSheet extends StatefulWidget {
-  const AddTaskBottomSheet({super.key});
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
 }
@@ -13,8 +16,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   var formKey = GlobalKey<FormState>();
   String tittle = '';
   String description = '';
+  late AppConfigProvider provider;
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of<AppConfigProvider>(context);
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(20),
@@ -22,7 +27,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         child: Column(
           children: [
             Text(AppLocalizations.of(context)!.add_new_task,
-                style: Theme.of(context).textTheme.titleMedium),
+                style: provider.isDarkTheme()?
+                    Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: AppColor.whiteColor):
+                Theme.of(context).textTheme.titleMedium),
             Form(
                 key: formKey,
                 child: Column(
@@ -41,7 +49,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           tittle = text;
                         },
                         decoration: InputDecoration(
-                            hintText:AppLocalizations.of(context)!.enter_task),
+                            hintText:AppLocalizations.of(context)!.enter_task,
+                            hintStyle: TextStyle(
+                                color:provider.isDarkTheme()?
+                                AppColor.textFormDark:
+                                AppColor.grayColor ),),
                       ),
                     ),
                     Padding(
@@ -58,13 +70,23 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         },
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.enter_description,
+                          hintStyle: TextStyle(
+                            color: provider.isDarkTheme()?
+                                AppColor.textFormDark:
+                                AppColor.grayColor
+                          )
                         ),
                         maxLines: 4,
                       ),
                     ),
                     Text(
                       AppLocalizations.of(context)!.select,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: provider.isDarkTheme()?
+                      Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: AppColor.whiteColor
+                      )
+                      :
+                      Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(
                       height: 30,
@@ -76,7 +98,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         child: Text(
                           '${DateFormat.yMMMMd().format(selectedDate)}',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: provider.isDarkTheme()?
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                color: AppColor.whiteColor
+                              ):
+                          Theme.of(context).textTheme.bodySmall,
                         )),
                     Padding(
                       padding:
@@ -112,7 +138,18 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   void addTask() {
     if(formKey.currentState?.validate() == true){
-
+     /// Add task
+      Task task = Task(
+          title: tittle,
+          description: description,
+          dateTime: selectedDate);
+      FirebaseUtils.addTaskToFireStore(task).timeout(
+        Duration(seconds: 1),onTimeout: (){
+          print("Task added successfully");
+          provider.getAllTasksFromFireStore();
+          Navigator.pop(context);
+      }
+      );
     }
   }
 }

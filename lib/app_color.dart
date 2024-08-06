@@ -9,4 +9,5 @@ class AppColor{
   static Color backgroundLightColor = Color(0xffDFECDB);
   static Color backgroundDarkColor = Color(0xff060E1E);
   static Color backDarkColor = Color(0xff141922);
-}
+  static Color textFormDark = Color(0xff707070);
+} 
