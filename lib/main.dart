@@ -1,12 +1,15 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/authentication/login/login_screen.dart';
+import 'package:todoapp/authentication/register/register_screen.dart';
 import 'package:todoapp/home/home_screen.dart';
 import 'package:todoapp/home/task_list/edit_task.dart';
 import 'package:todoapp/my_theme_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
 void main ()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,10 +42,12 @@ class MyApp extends StatelessWidget {
       darkTheme: MyThemeData.themeDataDark,
       themeMode: provider.appTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeScreen.routeName ,
+      initialRoute: LoginScreen.routeName,
       routes: {
         HomeScreen.routeName : (context) => HomeScreen(),
-        EditTask.routeName : (context) => EditTask()
+        EditTask.routeName: (context) => EditTask(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        LoginScreen.routeName: (context) => LoginScreen()
       },
       locale: Locale(provider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
