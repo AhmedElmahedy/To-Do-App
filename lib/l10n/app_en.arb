@@ -15,6 +15,8 @@
 "mode" : "Mode",
 "dark" : "Dark",
 "light" : "Light",
+"icon_delete" : "Delete",
+"icon_edit" : "Edit",
 "please_enter_your_task":"Please Enter Your Task",
 "please_enter_your_description":"Please Enter Your Description",
 "edit_task" : "Edit Your Task",

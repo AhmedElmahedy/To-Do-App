@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
@@ -6,6 +7,7 @@ import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/model/task.dart';
 import 'package:todoapp/home/task_list/edit_task.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
+
 class TaskListItems extends StatefulWidget {
   Task task ;
   TaskListItems({required this.task});
@@ -31,13 +33,13 @@ class _TaskListItemsState extends State<TaskListItems> {
             SlidableAction(
               borderRadius: BorderRadius.all(Radius.circular(15)),
               onPressed: (context){
-                /// Edit Task
+                /// go Edit Task
                 Navigator.pushNamed(context, EditTask.routeName);
               },
               backgroundColor: Color(0xDA1BB6A9),
               foregroundColor: Colors.white,
               icon: Icons.edit,
-              label: 'EDIT',
+              label: AppLocalizations.of(context)!.icon_edit,
             ),
           ],
 
@@ -65,7 +67,7 @@ class _TaskListItemsState extends State<TaskListItems> {
               backgroundColor: Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.icon_delete,
             ),
           ],
         ),

@@ -54,14 +54,14 @@ class MyThemeData{
       bodySmall: GoogleFonts.inter(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: Color(0x9c5b5858)),
+            color: Color(0x9c5b5858),
+          ),
           bodyLarge: GoogleFonts.poppins(
               fontSize: 24,
               color: Color(0xff303030),
               fontWeight: FontWeight.bold),
           bodyMedium:
-              GoogleFonts.poppins(fontSize: 14, color: AppColor.textFormDark))
-  );
+              GoogleFonts.poppins(fontSize: 14, color: AppColor.textFormDark)));
   static final themeDataDark = ThemeData(
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: AppColor.backDarkColor

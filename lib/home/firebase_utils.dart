@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todoapp/home/model/task.dart';
 
 class FirebaseUtils {
-
   /// Collection
   static CollectionReference<Task> getTasksCollection() {
     return FirebaseFirestore.instance
