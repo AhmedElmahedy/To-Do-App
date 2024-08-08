@@ -40,16 +40,18 @@ class _EditTaskState extends State<EditTask> {
           Padding(
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04),
-            child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 0.03,
-                    horizontal: MediaQuery.of(context).size.width * 0.03),
-                decoration: BoxDecoration(
-                    color: AppColor.whiteColor,
-                    borderRadius: BorderRadius.circular(20)),
-                width: MediaQuery.of(context).size.width * 0.8705024311183144,
-                height: MediaQuery.of(context).size.width * 1.652840909090909,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height * 0.03,
+                  horizontal: MediaQuery.of(context).size.width * 0.03),
+              decoration: BoxDecoration(
+                  color: provider.isDarkTheme()
+                      ? AppColor.backDarkColor
+                      : AppColor.whiteColor,
+                  borderRadius: BorderRadius.circular(20)),
+              width: MediaQuery.of(context).size.width * 0.8705024311183144,
+              height: MediaQuery.of(context).size.width * 1.652840909090909,
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -63,32 +65,49 @@ class _EditTaskState extends State<EditTask> {
                               : Theme.of(context).textTheme.titleMedium),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
+
+                    /// Edit task
                     TextField(
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: provider.isDarkTheme()
+                              ? AppColor.whiteColor
+                              : AppColor.backDarkColor),
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.edit_task,
                           hintStyle: TextStyle(
+                              fontSize: 18,
                               color: provider.isDarkTheme()
                                   ? AppColor.whiteColor
                                   : AppColor.grayColor)),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
+
+                    /// Edit Description
                     TextField(
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: provider.isDarkTheme()
+                              ? AppColor.whiteColor
+                              : AppColor.backDarkColor),
                       decoration: InputDecoration(
-              
                           hintText:
                               AppLocalizations.of(context)!.edit_description,
                           hintStyle: TextStyle(
-                              color: provider.isDarkTheme()
+                            fontSize: 18,
+                            color: provider.isDarkTheme()
                                   ? AppColor.whiteColor
                                   : AppColor.grayColor),),
-                      maxLines: 4,
+                      maxLines: 2,
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Text(
                       AppLocalizations.of(context)!.select,
@@ -99,7 +118,7 @@ class _EditTaskState extends State<EditTask> {
                               .copyWith(color: AppColor.whiteColor)
                           : Theme.of(context).textTheme.titleLarge,
                     ),
-              
+
                     TextButton(
                         onPressed: () {
                           showCalendar();
@@ -113,7 +132,7 @@ class _EditTaskState extends State<EditTask> {
                           ):
                           Theme.of(context).textTheme.bodySmall,
                         )),
-              
+
                     Padding(
                       padding:
                        EdgeInsets.symmetric(

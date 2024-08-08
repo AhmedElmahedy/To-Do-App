@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:todoapp/home/settings/settings_tab.dart';
 import 'package:todoapp/home/task_list/add_task_bottom_sheet.dart';
 import 'package:todoapp/home/task_list/task_list_tab.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home Screen';
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 void addTaskBottomSheet() {
   showModalBottomSheet(
-      context: context,
+        context: context,
       builder: (context) => AddTaskBottomSheet()
   );
 }

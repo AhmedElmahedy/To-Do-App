@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/model/task.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
@@ -39,6 +39,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: TextFormField(
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: provider.isDarkTheme()
+                                ? AppColor.whiteColor
+                                : AppColor.backDarkColor),
                         validator: (text) {
                           if (text == null || text.isEmpty) {
                             return AppLocalizations.of(context)!.please_enter_your_task;
@@ -50,15 +56,21 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         },
                         decoration: InputDecoration(
                             hintText:AppLocalizations.of(context)!.enter_task,
-                            hintStyle: TextStyle(
-                                color:provider.isDarkTheme()?
-                                AppColor.textFormDark:
-                                AppColor.grayColor ),),
+                          hintStyle: TextStyle(
+                              color:provider.isDarkTheme()?
+                                AppColor.textFormDark: AppColor.grayColor),
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(8),
                       child: TextFormField(
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: provider.isDarkTheme()
+                                ? AppColor.whiteColor
+                                : AppColor.backDarkColor),
                         validator: (text) {
                           if (text == null || text.isEmpty) {
                             return AppLocalizations.of(context)!.please_enter_your_description;
@@ -76,7 +88,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                                 AppColor.grayColor
                           )
                         ),
-                        maxLines: 4,
+                        maxLines: 2,
                       ),
                     ),
                     Text(
