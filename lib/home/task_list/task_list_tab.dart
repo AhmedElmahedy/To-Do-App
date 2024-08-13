@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:todoapp/home/task_list/task_list_items.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
-
+import 'package:todoapp/providers/user_provider.dart';
 
 class TaskListTab extends StatefulWidget {
   @override
@@ -15,8 +15,9 @@ class _TaskListTabState extends State<TaskListTab> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     if(provider.tasksList.isEmpty) {
-      provider.getAllTasksFromFireStore();
+      provider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
     }
     return Column(
       children: [
@@ -25,7 +26,8 @@ class _TaskListTabState extends State<TaskListTab> {
           initialDate: provider.selectDate,
           onDateChange: (selectedDate) {
             ///`selectedDate` the new date selected.
-            provider.changeSelectDate(selectedDate);
+            provider.changeSelectDate(
+                selectedDate, userProvider.currentUser!.id!);
           },
           headerProps:  EasyHeaderProps(
             monthStyle: TextStyle(

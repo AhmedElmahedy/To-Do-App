@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:todoapp/authentication/custom_text_from_field.dart';
 import 'package:todoapp/dialog_utils.dart';
+import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/home_screen.dart';
+import 'package:todoapp/home/model/my_users.dart';
+
+import '../../providers/user_provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = 'Register Screen';
-  TextEditingController nameController = TextEditingController(text: "ahmed");
-  TextEditingController emailController =
-      TextEditingController(text: 'ahmed@gmail.com');
-  TextEditingController passwordController =
-      TextEditingController(text: '123456');
-  TextEditingController passwordConfirmController =
-      TextEditingController(text: '123456');
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -165,6 +167,13 @@ class RegisterScreen extends StatelessWidget {
           email: emailController.text,
           password: passwordController.text,
         );
+        MyUsers myUsers = MyUsers(
+            id: credential.user?.uid ?? '',
+            name: nameController.text,
+            email: emailController.text);
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.upDateUser(myUsers);
+        await FirebaseUtils.addUserToFireStore(myUsers);
 
         /// todo: hide loading..
         DialogUtils.hideLoading(context: context);
@@ -176,7 +185,7 @@ class RegisterScreen extends StatelessWidget {
             title: 'Success',
             posActionName: 'ok',
             posAction: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushReplacementNamed(context, HomeScreen.routeName);
             });
         print('register successfully');
         print(credential.user?.uid ?? 'null');
