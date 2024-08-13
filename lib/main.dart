@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +10,7 @@ import 'package:todoapp/home/home_screen.dart';
 import 'package:todoapp/home/task_list/edit_task.dart';
 import 'package:todoapp/my_theme_data.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/providers/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,13 +22,26 @@ void main() async {
               messagingSenderId: "261792930121",
               projectId: "todo-app-32e99"))
       : await Firebase.initializeApp();
-  await FirebaseFirestore.instance.disableNetwork();
+  //await FirebaseFirestore.instance.disableNetwork();
 
-  runApp(ChangeNotifierProvider(
-      create: (context) => AppConfigProvider()
-        ..getLanguage()
-        ..getTheme(),
-      child: MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => AppConfigProvider()
+              ..getLanguage()
+              ..getTheme()),
+        ChangeNotifierProvider(create: (context) => UserProvider())
+      ],
+      child: MyApp(),
+    ),
+
+    // ChangeNotifierProvider(
+    // create: (context) => AppConfigProvider()
+    //   ..getLanguage()
+    //   ..getTheme(),
+    // child: MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {

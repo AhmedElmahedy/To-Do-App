@@ -6,6 +6,8 @@ import 'package:todoapp/app_color.dart';
 import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/model/task.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/providers/user_provider.dart';
+
 class AddTaskBottomSheet extends StatefulWidget {
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
@@ -155,11 +157,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           title: tittle,
           description: description,
           dateTime: selectedDate);
-      FirebaseUtils.addTaskToFireStore(task).timeout(
-        Duration(seconds: 1),onTimeout: (){
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      FirebaseUtils.addTaskToFireStore(task, userProvider.currentUser!.id!)
+          .then((value) {
+        print("Task added successfully");
+        provider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
+        Navigator.pop(context);
+      }).timeout(Duration(seconds: 1),onTimeout: (){
           print("Task added successfully");
-          provider.getAllTasksFromFireStore();
-          Navigator.pop(context);
+        provider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
+        Navigator.pop(context);
       }
       );
     }

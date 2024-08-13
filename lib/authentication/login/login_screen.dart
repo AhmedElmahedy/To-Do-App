@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/app_color.dart';
 import 'package:todoapp/authentication/custom_text_from_field.dart';
+import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/home_screen.dart';
+import 'package:todoapp/providers/user_provider.dart';
 
 import '../../dialog_utils.dart';
 import '../register/register_screen.dart';
@@ -10,10 +13,8 @@ import '../register/register_screen.dart';
 class LoginScreen extends StatelessWidget {
   static const String routeName = 'Login Screen';
 
-  TextEditingController emailController =
-      TextEditingController(text: 'ahmed@gmail.com');
-  TextEditingController passwordController =
-      TextEditingController(text: '123456');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -172,6 +173,14 @@ class LoginScreen extends StatelessWidget {
             .signInWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text);
 
+        var user = await FirebaseUtils.readUserFromFireStore(
+            credential.user?.uid ?? '');
+        if (user == null) {
+          return;
+        }
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.upDateUser(user);
+
         /// todo: hide loading..
         DialogUtils.hideLoading(context: context);
 
@@ -182,7 +191,7 @@ class LoginScreen extends StatelessWidget {
             title: 'Success',
             posActionName: 'ok',
             posAction: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushReplacementNamed(context, HomeScreen.routeName);
             });
         print("login successfully");
         print(credential.user?.uid ?? 'null');

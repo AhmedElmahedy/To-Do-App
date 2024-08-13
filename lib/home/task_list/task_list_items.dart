@@ -7,6 +7,7 @@ import 'package:todoapp/home/firebase_utils.dart';
 import 'package:todoapp/home/model/task.dart';
 import 'package:todoapp/home/task_list/edit_task.dart';
 import 'package:todoapp/providers/app_config_provider.dart';
+import 'package:todoapp/providers/user_provider.dart';
 
 class TaskListItems extends StatefulWidget {
   Task task ;
@@ -22,6 +23,7 @@ class _TaskListItemsState extends State<TaskListItems> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     return Container(
       margin: EdgeInsets.all(10),
       child: Slidable(
@@ -56,12 +58,19 @@ class _TaskListItemsState extends State<TaskListItems> {
               borderRadius: BorderRadius.all(Radius.circular(15)),
               onPressed: (context){
                 /// Delete Task
-                FirebaseUtils.deleteTaskFromFireStore(widget.task).timeout(
+                FirebaseUtils.deleteTaskFromFireStore(
+                        widget.task, userProvider.currentUser!.id!)
+                    .then((value) {
+                  print('task deleted successfully');
+                  provider
+                      .getAllTasksFromFireStore(userProvider.currentUser!.id!);
+                }).timeout(
                   Duration(microseconds : 1),
                   onTimeout: (){
                     print('task deleted successfully');
-                    provider.getAllTasksFromFireStore();
-                },
+                    provider.getAllTasksFromFireStore(
+                        userProvider.currentUser!.id!);
+                  },
                 );
               },
               backgroundColor: Color(0xFFFE4A49),
